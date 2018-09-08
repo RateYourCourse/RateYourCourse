@@ -1,9 +1,15 @@
-var http = require('http');
 
-function onRequest(request, response) {
-  response.writeHead(200, {'Content-Type': 'text/plain'});
-  response.write('Hello World')
-  response.end();
-}
+//variables
+var express = require('express');
+var app = express();
 
-http.createServer(onRequest).listen(8000)
+// middleware
+app.use(express.static('static'));
+
+app.get('/', function (req, res) {
+  res.send('Hello World!');
+});
+
+app.listen(3000, function () {
+  console.log('Example app listening on port 3000!');
+});
