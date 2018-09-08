@@ -1,3 +1,5 @@
+const MongoClient = require("mongodb").MongoClient;
+
 const rp = require("request-promise");
 const cheerio = require("cheerio");
 const options = {
@@ -7,6 +9,9 @@ const options = {
     return cheerio.load(body);
   }
 };
+const url = "mongodb://localhost:27017";
+
+const dbName = "rateyourcourse";
 
 const courses = [];
 
@@ -35,7 +40,19 @@ rp(options)
         console.log("Skipped: ", name, prof, id, link);
       }
     });
+    saveData();
   })
   .catch(function(err) {
     console.log(err);
   });
+function saveData() {
+  MongoClient.connect(
+    url,
+    function(err, client) {
+      const db = client.db(dbName);
+
+      db.collection("courses").insertMany(courses);
+      client.close();
+    }
+  );
+}
