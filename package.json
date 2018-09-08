@@ -1,0 +1,19 @@
+{
+  "name": "rateyourcourse",
+  "version": "1.0.0",
+  "description": "\"# RateYourCourse\"",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RateYourCourse/RateYourCourse.git"
+  },
+  "author": "",
+  "license": "GPL-3.0-only",
+  "bugs": {
+    "url": "https://github.com/RateYourCourse/RateYourCourse/issues"
+  },
+  "homepage": "https://github.com/RateYourCourse/RateYourCourse#readme"
+}
