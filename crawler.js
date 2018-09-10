@@ -15,19 +15,34 @@ const dbName = "rateyourcourse";
 
 const courses = [];
 
+function isIdAlreadyInList(id) {
+  for (var i = 0; i < courses.length; i++) {
+    course = courses[i];
+    if (course.id == id) {
+      return true;
+    }
+  }
+  return false;
+}
+
 rp(options)
   .then(function($) {
     $("table:nth-child(4) tr").each(function(i, elem) {
-      const prof = $(elem)
-        .children("td:nth-child(5)")
-        .text();
-      const name = $(elem)
-        .children("td:nth-child(7)")
-        .text();
       const id = $(elem)
         .children("td:nth-child(3)")
         .children("a")
-        .text();
+        .text()
+        .trim();
+
+      const prof = $(elem)
+        .children("td:nth-child(5)")
+        .text()
+        .trim();
+      const name = $(elem)
+        .children("td:nth-child(7)")
+        .text()
+        .trim();
+
       const link =
         "https://verdi.unisg.ch/" +
         $(elem)
@@ -35,11 +50,12 @@ rp(options)
           .children("a")
           .attr("href");
       if (id && name && prof && link) {
-        courses.push({ name, prof, id, link });
-      } else {
-        console.log("Skipped: ", name, prof, id, link);
+        if (!isIdAlreadyInList(id)) {
+          courses.push({ name, prof, id, link });
+        }
       }
     });
+
     saveData();
   })
   .catch(function(err) {
@@ -51,7 +67,7 @@ function saveData() {
     function(err, client) {
       const db = client.db(dbName);
 
-      db.collection("courses").insertMany(courses);
+      db.collection("Courses").insertMany(courses);
       client.close();
     }
   );
