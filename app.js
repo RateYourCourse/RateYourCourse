@@ -33,7 +33,7 @@ MongoClient.connect(
   url,
   function(err, client) {
     db = client.db(dbName);
-    db.collection("Courses").createIndex({ "$*": "text" });
+    db.collection("Courses").createIndex({ "$**": "text" });
     app.listen(3000, function() {
       console.log("Example app listening on port 3000!");
     });
