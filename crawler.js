@@ -68,6 +68,7 @@ function saveData() {
       const db = client.db(dbName);
 
       db.collection("Courses").insertMany(courses);
+
       client.close();
     }
   );
