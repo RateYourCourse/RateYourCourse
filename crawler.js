@@ -64,9 +64,12 @@ rp(options)
 function saveData() {
   MongoClient.connect(
     url,
+    { useNewUrlParser: true },
     function(err, client) {
       const db = client.db(dbName);
-
+      {
+        useNewUrlParser: true;
+      }
       db.collection("Courses").insertMany(courses);
 
       client.close();
