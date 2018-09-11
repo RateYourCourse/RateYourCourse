@@ -3,15 +3,14 @@ const MongoClient = require("mongodb").MongoClient;
 var express = require("express");
 var bodyParser = require("body-parser");
 var app = express();
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const url = "mongodb://localhost:27017";
-
+const url = process.env.MONGODB_URI || "mongodb://localhost:27017";
 const dbName = "rateyourcourse";
 var db;
 
-// middleware
 app.use(express.static("static"));
 
 //Implementation of a search function
@@ -20,17 +19,41 @@ app.get("/courses", function(req, res) {
 
   db.collection("Courses")
     .find(name == "" ? {} : { $text: { $search: name } })
-    //.find({ name: /Marketing/i })
     .toArray(function(err, result) {
       if (err) throw err;
       console.log(result);
       res.send(JSON.stringify(result));
     });
 });
+
+// Implementation of Review post
 app.post("/reviews", function(req, res) {
   var data = req.body.data;
+  db.collection("Reviews").insert(
+    { course_id: data.id },
+    { review_title: data.title },
+    { review_semester: data.semester },
+    { review_comment: data.comment },
+    { review_stars: data.stars },
+    { review_mail: data.mail }
+  );
   console.log(data);
 });
+
+//Implementation of a search function for reviews
+app.get("/reviews", function(req, res) {
+  console.log(req.query.q);
+  const name = req.query.q.toString() || "";
+  db.collection("Reviews")
+    .find({ course_id: name })
+    .toArray(function(err, review) {
+      if (err) throw err;
+      console.log(review);
+      res.send(JSON.stringify(review[0]));
+    });
+});
+
+//Database
 MongoClient.connect(
   url,
   function(err, client) {
