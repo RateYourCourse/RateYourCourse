@@ -18,7 +18,7 @@
 
 }
 
-.jumbotron {
+#index .jumbotron {
   padding-top: var(--jumbotron-padding-y);
   padding-bottom: var(--jumbotron-padding-y);
   padding-top:175px;
@@ -28,8 +28,22 @@
   background-size:cover;
 
   margin-bottom: 0px;
-
 }
+#result .jumbotron {
+  padding-top: var(--jumbotron-padding-y);
+  padding-bottom: var(--jumbotron-padding-y);
+  padding-top:50px;
+  padding-bottom:50px;
+  margin-bottom: 0px;
+}
+#coursesingle .jumbotron {
+  padding-top: var(--jumbotron-padding-y);
+  padding-bottom: var(--jumbotron-padding-y);
+  padding-top:50px;
+  padding-bottom:50px;
+  margin-bottom: 0px;
+}
+
 @media (min-width: 768px) {
   .jumbotron {
     padding-top: calc(var(--jumbotron-padding-y) * 2);
@@ -122,6 +136,38 @@ transition: background .55s ease;
 .jumbotron .container {
   max-width: 40rem;
 }
+/* ============== result Page Box ============= */
+#result .boxed{
+  background-color: grey;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  color:white;
+  font-size: 20px;
+}
+
+#coursesingle .boxed{
+  background-color: grey;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  color:white;
+  font-size: 20px;
+}
+#coursesingle .course{
+  background-color: grey;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  color:white;
+  font-size: 20px;
+}
+#coursesingle .card-text{
+  background-color: white;
+  text-align: left;
+
+}
+/* ============== column ============= */
+
+
+
 /* ============== column ============= */
 .bg-grey {
   background-color: #cacabc;

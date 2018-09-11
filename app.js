@@ -34,7 +34,8 @@ app.post("/reviews", function(req, res) {
     { review_title: data.title },
     { review_semester: data.semester },
     { review_comment: data.comment },
-    { review_stars: data.stars }
+    { review_stars: data.stars },
+    { review_mail: data.mail }
   );
   console.log(data);
 });
