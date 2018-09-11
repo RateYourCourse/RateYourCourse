@@ -49,7 +49,7 @@
             <strong> &ensp; Rate Your Course</strong>
           </a>
           <nav class="nav nav-masthead justify-content-center ryc-navlink">
-            <a class="nav-link active" href="#">Home</a>
+            <a class="nav-link active" href="/">Home</a>
             <a class="nav-link" href="#">Features</a>
             <a class="nav-link" href="#">Contact</a>
           </nav>
@@ -87,7 +87,7 @@
 
           <div class="album py-5 bg-light">
             <div class="container">
-          <div class="row">
+          <div id="commentlist" class="row">
             <div class="col-md-4">
               <div class="card mb-4 shadow-sm">
                 <div class="boxed">
@@ -149,9 +149,23 @@
 
 
     <script >
+
+    var template =
+    `<div class="col-md-4">
+                  <div class="card mb-4 shadow-sm">
+                    <div class="boxed">
+                      <strong><%=review_title%></strong>
+                      </div>
+                    <div class="card-body">
+                    <%=review_comment%>
+
+
+
+</div> </div> </div>`
+
     function sentrequest (){
       var xhttp = new XMLHttpRequest();
-      xhttp.open("GET", "/courses?q="+window.location.hash.slice(1), true);
+      xhttp.open("GET", "/course?q="+window.location.hash.slice(1), true);
       xhttp.send();
       xhttp.onload = function(){
         // happens when server gets back to us...
@@ -163,8 +177,8 @@
 
     }
     function renderResult(data){
-      document.querySelector("#id").innerHTML=data[0].id + " <br>"+data[0].name
-      document.querySelector("#prof").innerHTML=data[0].prof
+      document.querySelector("#id").innerHTML=data.id + " <br>"+data.name
+      document.querySelector("#prof").innerHTML=data.prof
     }
     sentrequest()
 
@@ -183,9 +197,32 @@
       // this is happening when a key is pressed in the searchbox
       var xhttp = new XMLHttpRequest();
       xhttp.open("POST", "/reviews", true);
-      xhttp.send(data);
-    })
+      xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 
+      xhttp.onload = function(){
+        console.log('hallo')
+        location.reload(true);
+      }
+      xhttp.send(JSON.stringify(data));
+    })
+    function getreviews (){
+      var xhttp = new XMLHttpRequest();
+      xhttp.open("GET", "/reviews?q="+ window.location.hash.slice(1), true);
+      xhttp.send();
+      xhttp.onload = function(){
+        // happens when server gets back to us...
+        // here we have now xhttp.response which contains the data from the server.
+        // CB is only called when we have received the data from the server.
+        var data = JSON.parse(xhttp.response)
+        var compile = _.template(template)
+        var str= ""
+        data.forEach(function(element){
+          str += compile(element)
+        })
+        document.querySelector('#commentlist').insertAdjacentHTML('beforeend', str)
+      }
+    }
+getreviews()
 
 
 

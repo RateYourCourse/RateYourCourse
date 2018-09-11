@@ -21,23 +21,36 @@ app.get("/courses", function(req, res) {
     .find(name == "" ? {} : { $text: { $search: name } })
     .toArray(function(err, result) {
       if (err) throw err;
-      console.log(result);
+
       res.send(JSON.stringify(result));
+    });
+});
+
+app.get("/course", function(req, res) {
+  const name = req.query.q || "";
+  console.log(name);
+  db.collection("Courses")
+    .find({id: name})
+    .toArray(function(err, result) {
+      if (err) throw err;
+      console.log(result[0]);
+      res.send(JSON.stringify(result[0]));
     });
 });
 
 // Implementation of Review post
 app.post("/reviews", function(req, res) {
-  var data = req.body.data;
+  var data = req.body;
+  console.log(req.body);
   db.collection("Reviews").insert(
-    { course_id: data.id },
-    { review_title: data.title },
-    { review_semester: data.semester },
-    { review_comment: data.comment },
-    { review_stars: data.stars },
-    { review_mail: data.mail }
+    { course_id: data.id,
+    review_title: data.title,
+    review_semester: data.semester,
+    review_comment: data.comment,
+    review_stars: data.stars,
+    review_mail: data.mail }
   );
-  console.log(data);
+  res.send(200)
 });
 
 //Implementation of a search function for reviews
@@ -49,7 +62,7 @@ app.get("/reviews", function(req, res) {
     .toArray(function(err, review) {
       if (err) throw err;
       console.log(review);
-      res.send(JSON.stringify(review[0]));
+      res.send(JSON.stringify(review));
     });
 });
 
