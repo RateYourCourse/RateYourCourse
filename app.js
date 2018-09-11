@@ -7,8 +7,9 @@ var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const url = process.env.MONGODB_URI || "mongodb://localhost:27017";
-const dbName = "rateyourcourse";
+const url =
+  process.env.MONGODB_URI || "mongodb://localhost:27017/rateyourcourse";
+const PORT = process.env.PORT || 3000;
 var db;
 
 app.use(express.static("static"));
@@ -70,10 +71,10 @@ app.get("/reviews", function(req, res) {
 MongoClient.connect(
   url,
   function(err, client) {
-    db = client.db(dbName);
+    db = client.db();
     db.collection("Courses").createIndex({ "$**": "text" });
-    app.listen(3000, function() {
-      console.log("Example app listening on port 3000!");
+    app.listen(PORT, function() {
+      console.log("Example app listening on port ", PORT);
     });
   }
 );
