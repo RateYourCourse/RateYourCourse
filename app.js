@@ -12,7 +12,7 @@ const url =
   "mongodb://localhost:27017" ||
   "mongodb://heroku_k67cjpp6:lv11adj8q0vn70n9i4sur8p108@ds151602.mlab.com:51602/heroku_k67cjpp6";
 const PORT = process.env.PORT || 3000;
-const dbName = "rateyourcourse";
+const dbName = process.env.DB_NAME || "rateyourcourse";
 var db;
 
 app.use(express.static("static"));
