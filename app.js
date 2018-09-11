@@ -7,7 +7,10 @@ var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const url = process.env.MONGODB_URI || "mongodb://localhost:27017";
+const url =
+  process.env.MONGODB_URI ||
+  "mongodb://localhost:27017" ||
+  "mongodb://heroku_k67cjpp6:lv11adj8q0vn70n9i4sur8p108@ds151602.mlab.com:51602/heroku_k67cjpp6";
 const PORT = process.env.PORT || 3000;
 const dbName = "rateyourcourse";
 var db;
@@ -29,7 +32,7 @@ app.get("/courses", function(req, res) {
 
 // Implementation of Review post
 app.post("/reviews", function(req, res) {
-  var data = req.body.q;
+  var data = req.body.data;
   db.collection("Reviews").insert(
     { course_id: data.id },
     { review_title: data.title },
