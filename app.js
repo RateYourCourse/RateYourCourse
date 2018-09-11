@@ -8,6 +8,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const url = process.env.MONGODB_URI || "mongodb://localhost:27017";
+const PORT = process.env.PORT || 3000;
 const dbName = "rateyourcourse";
 var db;
 
@@ -28,7 +29,7 @@ app.get("/courses", function(req, res) {
 
 // Implementation of Review post
 app.post("/reviews", function(req, res) {
-  var data = req.body.data;
+  var data = req.body.q;
   db.collection("Reviews").insert(
     { course_id: data.id },
     { review_title: data.title },
@@ -49,7 +50,7 @@ app.get("/reviews", function(req, res) {
     .toArray(function(err, review) {
       if (err) throw err;
       console.log(review);
-      res.send(JSON.stringify(review[0]));
+      res.send(JSON.stringify(review));
     });
 });
 
@@ -59,8 +60,8 @@ MongoClient.connect(
   function(err, client) {
     db = client.db(dbName);
     db.collection("Courses").createIndex({ "$**": "text" });
-    app.listen(3000, function() {
-      console.log("Example app listening on port 3000!");
+    app.listen(PORT, function() {
+      console.log("Example app listening on port ", PORT);
     });
   }
 );
