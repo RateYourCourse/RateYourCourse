@@ -17,9 +17,11 @@
   },
   "homepage": "https://github.com/RateYourCourse/RateYourCourse#readme",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "cheerio": "^1.0.0-rc.2",
     "express": "^4.16.3",
     "mongodb": "^3.1.4",
+    "mongodb-cron": "^1.2.0",
     "request": "^2.88.0",
     "request-promise": "^4.2.2"
   }

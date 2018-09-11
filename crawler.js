@@ -1,4 +1,5 @@
 const MongoClient = require("mongodb").MongoClient;
+import { MongoCron } from "mongodb-cron";
 
 const rp = require("request-promise");
 const cheerio = require("cheerio");
