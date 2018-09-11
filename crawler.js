@@ -10,7 +10,8 @@ const options = {
     return cheerio.load(body);
   }
 };
-const url = "mongodb://localhost:27017";
+const url =
+  process.env.MONGODB_URI || "mongodb://localhost:27017/rateyourcourse";
 
 const dbName = "rateyourcourse";
 
@@ -67,7 +68,7 @@ function saveData() {
     url,
     { useNewUrlParser: true },
     function(err, client) {
-      const db = client.db(dbName);
+      const db = client.db();
       {
         useNewUrlParser: true;
       }
